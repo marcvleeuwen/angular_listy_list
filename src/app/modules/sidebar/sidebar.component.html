@@ -1,0 +1,74 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isHandset$ | async) === false"
+               class="sidenav"
+               fixedInViewport>
+    <mat-card class="user-details mat-elevation-z0 background primary">
+      <div class="avatar" mat-card-avatar></div>
+      <button (click)="onSettingsClick()" class="user-settings" mat-icon-button>
+        <mat-icon>settings</mat-icon>
+        <!--    allow user to update details-->
+      </button>
+      <mat-card-title class="user-title">username</mat-card-title>
+    </mat-card>
+    <mat-divider></mat-divider>
+    <mat-nav-list>
+      <div mat-subheader>Lists
+        <div class="search-form">
+          <mat-form-field class="form-field-full-width" floatLabel="never">
+            <mat-label class="input-icon">Filter lists</mat-label>
+            <input (input)="filterList($event.target.value)" matInput type="text">
+          </mat-form-field>
+        </div>
+      </div>
+      <div *ngFor="let list of listsToDisplay">
+        <a (click)="onListClick(list)" [class.active]="list._id === activeListId" class="list-item" mat-list-item>
+          <div mat-line>{{list?.details?.title || list?._id}}</div>
+          <div mat-line>{{list?.details?.description || 'No Description'}}</div>
+        </a>
+      </div>
+    </mat-nav-list>
+    <!--    add logout button - pin to bottom -->
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row class="icons-bar">
+        <button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          type="button">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <div *ngIf="!(isHandset$ | async)" class="spacer"></div>
+        <span *ngIf="isHandset$ | async" class="app-name">{{toolbarTitle?.title}}</span>
+        <button
+          (click)="onEditClick()"
+          *ngIf="state === 'readonly'"
+          aria-label="Make content editable"
+          mat-icon-button
+          type="button">
+          <mat-icon aria-label="List edit icon">create</mat-icon>
+        </button>
+        <button
+          (click)="onDoneClick()"
+          *ngIf="state === 'edit'"
+          aria-label="Make content editable"
+          mat-icon-button
+          type="button">
+          <mat-icon aria-label="List save icon">save</mat-icon>
+        </button>
+      </mat-toolbar-row>
+      <mat-toolbar-row *ngIf="!(isHandset$ | async)">
+        <div class="nav-details">
+          <span class="nav-details-title">{{toolbarTitle?.title}}</span>
+          <span class="nav-details-description">{{toolbarTitle?.description}}</span>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <!-- Content is injected Here -->
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

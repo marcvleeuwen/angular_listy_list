@@ -1,0 +1,92 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 300px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+div.nav-details {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+
+  > .nav-details-title {
+
+  }
+
+  > .nav-details-description {
+    font-size: 14px;
+    font-weight: 300;
+  }
+}
+
+.icons-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - 32px);
+  margin: 0 16px;
+}
+
+.form-field-full-width {
+  width: 100%;
+  font-size: 16px;
+}
+
+mat-icon.input-icon {
+  padding-right: 10px;
+}
+
+.user-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 60px 40px;
+  grid-row-gap: 14px;
+
+  .avatar {
+    height: 100%;
+    width: 60px;
+    justify-self: center;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    background-image: url("https://www.stleos.uq.edu.au/wp-content/uploads/2016/08/image-placeholder.png");
+    background-size: cover;
+  }
+
+  button.user-settings {
+    justify-self: flex-end;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+  }
+
+  .user-title {
+    width: 100%;
+    text-align: center;
+    align-self: center;
+
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+}

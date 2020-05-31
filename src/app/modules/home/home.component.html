@@ -1,0 +1,21 @@
+<app-sidebar [(state)]="state" [toolbarTitle]="activeList">
+  <!-- inject body content here -->
+  <button (click)="onCancelEdit()"
+          *ngIf="state==='edit'"
+          aria-label="Example icon button with a delete icon"
+          class="fab"
+          color="primary"
+          mat-fab>
+    <mat-icon>clear</mat-icon>
+  </button>
+  <h1 *ngIf="!id">Please select or create a list</h1>
+  <h1 *ngIf="id && !displayList">Hmm... We can't find that list</h1>
+  <div *ngIf="state==='readonly'">
+    <mat-selection-list *ngFor="let category of displayList?.categoryItems">
+      <div mat-subheader>{{category.category}}</div>
+      <mat-list-option (click)="onCheckChanged(item, category.index)"
+                       *ngFor="let item of category.items"
+                       [selected]="item.status === 'done'">{{item.details.title}}</mat-list-option>
+    </mat-selection-list>
+  </div>
+</app-sidebar>
