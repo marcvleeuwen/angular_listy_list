@@ -10,6 +10,8 @@ import {SplashModule} from './modules/splash/splash.module';
 import {ThemeService} from './common/services/theme/theme.service';
 import {StyleManagerService} from './common/services/style-manager/style-manager.service';
 import {HttpClientModule} from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import {HttpClientModule} from '@angular/common/http';
     HammerModule,
     SplashModule,
     HomeModule,
-    AuthModule
+    AuthModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   bootstrap: [AppComponent],
   providers: [StyleManagerService, ThemeService]

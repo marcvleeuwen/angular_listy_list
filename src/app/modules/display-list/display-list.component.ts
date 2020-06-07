@@ -27,17 +27,17 @@ export class DisplayListComponent implements OnInit {
     this.isTouchDevice = DeviceUtils.IsTouchDevice();
   }
 
-  public handleRowEvent(event: any, item: Item, categoryIndex?: number): void {
-    if (event && event.type) {
+  public handleRowEvent(event: 'swipeLeft' | 'swipeRight' | 'click', item: Item, categoryIndex?: number): void {
+    if (event) {
       if (!this.rowDebounce.includes(item._id)) {
-        switch (event.type) {
+        switch (event) {
           case 'click':
             this.onCheckChanged(item, categoryIndex);
             break;
-          case 'swipeleft':
+          case 'swipeLeft':
             this.onItemSwipeLeft(item);
             break;
-          case 'swiperight':
+          case 'swipeRight':
             this.openItems = this.openItems.filter((id: string) => id !== item._id);
             break;
         }

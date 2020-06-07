@@ -3,12 +3,15 @@
   <div *ngFor="let item of category.items"
        class="list-item-wrapper">
     <mat-list-option
-      (click)="handleRowEvent($event, item, category.index)"
-      (swipeleft)="handleRowEvent($event, item)"
-      (swiperight)="handleRowEvent($event, item)"
+      (click)="handleRowEvent('click', item, category.index)"
       [class.slide-reveal]="openItems.includes(item._id)"
       [disabled]="!isTouchDevice && rowDebounce.includes(item._id)"
-      [selected]="item.status === 'done'">{{item.details.title}}</mat-list-option>
+      [selected]="item.status === 'done'"
+      checkboxPosition="before">
+      <mat-icon mat-list-icon (click)="handleRowEvent('swipeLeft', item)">more_vert</mat-icon>
+      <div>{{item.details.title}}</div>
+      <div>{{item.details.description}}</div>
+    </mat-list-option>
     <div [class.show-actions]="openItems.includes(item._id)" class="row-actions">
       <div class="item full-width bg-danger" matRipple>
         <mat-icon>delete</mat-icon>
