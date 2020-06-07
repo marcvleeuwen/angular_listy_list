@@ -1,0 +1,21 @@
+<mat-selection-list *ngFor="let category of content?.categoryItems">
+  <div mat-subheader>{{category.category}}</div>
+  <div *ngFor="let item of category.items"
+       class="list-item-wrapper">
+    <mat-list-option
+      (click)="handleRowEvent($event, item, category.index)"
+      (swipeleft)="handleRowEvent($event, item)"
+      (swiperight)="handleRowEvent($event, item)"
+      [class.slide-reveal]="openItems.includes(item._id)"
+      [disabled]="!isTouchDevice && rowDebounce.includes(item._id)"
+      [selected]="item.status === 'done'">{{item.details.title}}</mat-list-option>
+    <div [class.show-actions]="openItems.includes(item._id)" class="row-actions">
+      <div class="item full-width bg-danger" matRipple>
+        <mat-icon>delete</mat-icon>
+      </div>
+      <div class="item full-width bg-success" matRipple>
+        <mat-icon>reorder</mat-icon>
+      </div>
+    </div>
+  </div>
+</mat-selection-list>

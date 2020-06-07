@@ -1,0 +1,40 @@
+.list-item-wrapper {
+  position: relative;
+
+  mat-list-option {
+    transition: all 250ms ease-out;
+
+    &.slide-reveal {
+      transform: translateX(-25%);
+    }
+  }
+
+  .show-actions {
+    &.row-actions {
+      transform: scaleX(1);
+    }
+  }
+
+}
+
+.row-actions {
+  display: flex;
+  position: absolute;
+  width: 25%;
+  right: 0;
+  top: 0;
+  height: 100%;
+  align-items: center;
+  justify-content: stretch;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: all 250ms ease-out;
+
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    cursor: pointer;
+  }
+}
