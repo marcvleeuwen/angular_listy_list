@@ -1,1 +1,29 @@
-<p>edit-list works!</p>
+<mat-list *ngFor="let category of displayList?.categoryItems" role="list">
+  <!--  update category  -->
+  <mat-form-field class="full-width">
+    <mat-label>Category</mat-label>
+    <input [(ngModel)]="category.category" class="full-width" matInput>
+  </mat-form-field>
+  <mat-list-item *ngFor="let item of category.items"
+                 role="listitem">
+    <!--  update item title  -->
+    <mat-form-field class="full-width">
+      <input [(ngModel)]="item.details.title" class="full-width" matInput placeholder="Item title">
+    </mat-form-field>
+    <!--  update item description  -->
+    <mat-form-field class="full-width">
+      <input [(ngModel)]="item.details.description" class="full-width" matInput placeholder="Item description">
+    </mat-form-field>
+  </mat-list-item>
+  <!-- create new item -->
+  <mat-form-field class="full-width" floatLabel="never">
+    <input (keydown.enter)="addNewItem($event.target.value, category.index)" class="full-width" matInput
+           placeholder="New Item">
+  </mat-form-field>
+  <mat-divider></mat-divider>
+</mat-list>
+<!--  create new category  -->
+<mat-form-field appearance="" class="full-width" floatLabel="never">
+  <input (keydown.enter)="addNewCategory($event.target.value)" class="full-width" matInput
+         placeholder="New Category">
+</mat-form-field>

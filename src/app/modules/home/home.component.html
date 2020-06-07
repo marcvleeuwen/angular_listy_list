@@ -16,32 +16,12 @@
     <app-display-list (checkChange)="this.updateListItems($event.item, $event.categoryIndex)"
                       (moveItem)="onMoveItem($event.item, $event.newCategoryIndex, $event.oldCategoryIndex)"
                       (removeItem)="removeListItem($event.item, $event.categoryIndex)"
-                      [content]="displayList"></app-display-list>
+                      [displayList]="displayList"></app-display-list>
   </div>
 
   <!--  edit view  -->
   <ng-template #edit>
-    <mat-list *ngFor="let category of displayList?.categoryItems" role="list">
-      <mat-form-field class="full-width">
-        <mat-label>Category</mat-label>
-        <input [(ngModel)]="category.category" class="full-width" matInput>
-      </mat-form-field>
-      <mat-list-item *ngFor="let item of category.items"
-                     role="listitem">
-        <mat-form-field class="full-width" floatLabel="never">
-          <input [(ngModel)]="item.details.title" class="full-width" matInput placeholder="Item title">
-        </mat-form-field>
-      </mat-list-item>
-      <mat-form-field class="full-width" floatLabel="never">
-        <input (keydown.enter)="addNewItem($event.target.value, category.index)" class="full-width" matInput
-               placeholder="New Item">
-      </mat-form-field>
-      <mat-divider></mat-divider>
-    </mat-list>
-    <mat-form-field class="full-width" floatLabel="never">
-      <input (keydown.enter)="addNewCategory($event.target.value)" class="full-width" matInput
-             placeholder="New Category">
-    </mat-form-field>
+    <app-edit-list [displayList]="displayList"></app-edit-list>
   </ng-template>
 </app-sidebar>
 

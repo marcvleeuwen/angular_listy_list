@@ -14,6 +14,7 @@ import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
 import {MatRippleModule} from '@angular/material/core';
 import {DisplayListModule} from '../display-list/display-list.module';
+import {EditListModule} from '../edit-list/edit-list.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {DisplayListModule} from '../display-list/display-list.module';
     MatInputModule,
     FormsModule,
     MatRippleModule,
-    DisplayListModule
+    DisplayListModule,
+    EditListModule
   ]
 })
 export class HomeModule {

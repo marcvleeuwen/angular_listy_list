@@ -76,24 +76,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     //  make service call to update list on server
   }
 
-  public addNewItem(title: string, categoryIndex: number): void {
-    this.displayList.categoryItems[categoryIndex].items.push({
-      details: {
-        title
-      },
-      category: this.displayList.categoryItems[categoryIndex].category,
-      _id: `${categoryIndex}${this.displayList.categoryItems[categoryIndex].items.length}`
-    });
-  }
-
-  public addNewCategory(title: string): void {
-    this.displayList.categoryItems.push({
-      index: this.displayList.categoryItems.length,
-      category: title,
-      items: []
-    });
-  }
-
   public removeListItem(item: Item, categoryIndex: number): void {
 
   }

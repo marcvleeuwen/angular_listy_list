@@ -5,7 +5,7 @@
     transition: all 250ms ease-out;
 
     &.slide-reveal {
-      transform: translateX(-25%);
+      transform: translateX(-150px);
     }
   }
 
@@ -20,7 +20,7 @@
 .row-actions {
   display: flex;
   position: absolute;
-  width: 25%;
+  width: 150px;
   right: 0;
   top: 0;
   height: 100%;

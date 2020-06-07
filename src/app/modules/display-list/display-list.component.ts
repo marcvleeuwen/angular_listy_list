@@ -10,7 +10,7 @@ import {Item} from '../../common/models/item.model';
 })
 export class DisplayListComponent implements OnInit {
 
-  @Input() content: DisplayList;
+  @Input() displayList: DisplayList;
   @Output() moveItem: EventEmitter<{ item: Item, newCategoryIndex: number, oldCategoryIndex: number }> =
     new EventEmitter<{ item: Item, newCategoryIndex: number, oldCategoryIndex: number }>();
   @Output() removeItem: EventEmitter<{ item: Item, categoryIndex: number }> = new EventEmitter<{ item: Item, categoryIndex: number }>();
