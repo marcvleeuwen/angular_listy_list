@@ -13,6 +13,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
 import {MatRippleModule} from '@angular/material/core';
+import {DisplayListModule} from '../display-list/display-list.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatRippleModule} from '@angular/material/core';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    MatRippleModule
+    MatRippleModule,
+    DisplayListModule
   ]
 })
 export class HomeModule {

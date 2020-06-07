@@ -5,7 +5,7 @@ import {ListsMock} from '../../../mocks/lists.mocks';
 import {List} from '../../common/models/list.model';
 import {Item} from '../../common/models/item.model';
 import {Subscription} from 'rxjs';
-import {loadConfigurationFromPath} from 'tslint/lib/configuration';
+import {DeviceUtils} from '../../common/utils/device.utils';
 
 @Component({
   selector: 'app-home',
@@ -21,14 +21,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   public displayList: DisplayList;
   public list: List;
   public id: string;
-  public openItems: Array<string> = [];
-  public rowDebounce: Array<string> = [];
+  public isTouchDevice: boolean;
   private subscription: Subscription = new Subscription();
 
   constructor(private readonly route: ActivatedRoute) {
   }
 
   public ngOnInit(): void {
+
+    this.isTouchDevice = DeviceUtils.IsTouchDevice();
+
     this.subscription.add(this.route.queryParams.subscribe(queryParams => {
       this.id = queryParams.id;
 
@@ -43,35 +45,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     //  update active list details variable for current list
   }
 
-  public handleRowEvent(event: any, item: Item, categoryIndex?: number): void {
-    if (event && event.type) {
-      if (!this.rowDebounce.includes(item._id)) {
-        switch (event.type) {
-          case 'click':
-            this.rowDebounce.push(item._id);
-            this.onCheckChanged(item, categoryIndex);
-            break;
-          case 'swipeleft':
-            this.rowDebounce.push(item._id);
-            this.onItemSwipeLeft(item);
-            break;
-          case 'swiperight':
-            this.openItems = this.openItems.filter((id: string) => id !== item._id);
-            break;
-        }
-
-        // prevent issues with click and swipe event compatibility
-        window.setTimeout(() => {
-          this.rowDebounce = this.rowDebounce.filter((id: string) => id !== item._id);
-        }, 1);
-      }
-    } else {
-      console.error('row event is undefined or has no type', event);
-    }
-  }
-
   public onCancelEdit(): void {
     this.state = 'readonly';
+    this.mapDisplayList(this.list);
     //  revert list to initial state before the user began editing
   }
 
@@ -88,33 +64,38 @@ export class HomeComponent implements OnInit, OnDestroy {
     //  make service call to update list on server
   }
 
-  public updateListCategory(category: string, categoryIndex: string): void {
-    this.displayList.categoryItems[Number(categoryIndex)].category = category;
+  public onMoveItem(item: Item, oldCategoryIndex: number, newCategoryIndex: number): void {
+    this.displayList.categoryItems[oldCategoryIndex].items =
+      this.displayList.categoryItems[oldCategoryIndex].items.filter(catItem => item._id !== catItem._id);
+    this.displayList.categoryItems[newCategoryIndex].items.push(item);
+  }
+
+  public updateListCategory(category: string, categoryIndex: number): void {
+    this.displayList.categoryItems[categoryIndex].category = category;
     //  apply changes to original list
     //  make service call to update list on server
   }
 
-  public addNewItem(): void {
+  public addNewItem(title: string, categoryIndex: number): void {
+    this.displayList.categoryItems[categoryIndex].items.push({
+      details: {
+        title
+      },
+      category: this.displayList.categoryItems[categoryIndex].category,
+      _id: `${categoryIndex}${this.displayList.categoryItems[categoryIndex].items.length}`
+    });
+  }
 
+  public addNewCategory(title: string): void {
+    this.displayList.categoryItems.push({
+      index: this.displayList.categoryItems.length,
+      category: title,
+      items: []
+    });
   }
 
   public removeListItem(item: Item, categoryIndex: number): void {
 
-  }
-
-  private onItemSwipeLeft(item: Item): void {
-    if (this.openItems && this.openItems.includes(item._id)) {
-      this.openItems = this.openItems.filter((id: string) => id !== item._id);
-    } else {
-      this.openItems.push(item._id);
-    }
-  }
-
-  private onCheckChanged(item: Item, categoryIndex: number): void {
-    window.navigator.vibrate(2); // this will only work on android devices - https://developer.mozilla.org/en-US/docs/Web/API/Vibration_API
-    item.status = item.status === 'done' ? undefined : 'done';
-    this.openItems = this.openItems.filter((id: string) => id !== item._id);
-    this.updateListItems(item, categoryIndex);
   }
 
   private mapDisplayList(list: List): void {
@@ -149,7 +130,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     };
   }
 
-//  allow user to drag item to a different category
+//  allow user to move item to a different category
 //  allow user to update item tile and description
 //  update list items when user clicks on save icon
 
