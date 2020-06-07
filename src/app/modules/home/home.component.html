@@ -10,12 +10,45 @@
   </button>
   <h1 *ngIf="!id">Please select or create a list</h1>
   <h1 *ngIf="id && !displayList">Hmm... We can't find that list</h1>
-  <div *ngIf="state==='readonly'">
+
+  <!--  check list - readonly  -->
+  <div *ngIf="state==='readonly'; else edit">
     <mat-selection-list *ngFor="let category of displayList?.categoryItems">
       <div mat-subheader>{{category.category}}</div>
-      <mat-list-option (click)="onCheckChanged(item, category.index)"
-                       *ngFor="let item of category.items"
-                       [selected]="item.status === 'done'">{{item.details.title}}</mat-list-option>
+      <div *ngFor="let item of category.items"
+           class="list-item-wrapper">
+        <mat-list-option
+          (click)="handleRowEvent($event, item, category.index)"
+          (swipeleft)="handleRowEvent($event, item)"
+          (swiperight)="handleRowEvent($event, item)"
+          [class.slide-reveal]="openItems.includes(item._id)"
+          [disabled]="rowDebounce.includes(item._id)"
+          [selected]="item.status === 'done'">{{item.details.title}}</mat-list-option>
+        <div [class.show-actions]="openItems.includes(item._id)" class="row-actions">
+          <div class="item full-width bg-danger" matRipple><mat-icon>delete</mat-icon></div>
+          <div class="item full-width bg-success" matRipple><mat-icon>reorder</mat-icon></div>
+        </div>
+      </div>
     </mat-selection-list>
   </div>
+
+  <!--  edit view  -->
+  <ng-template #edit>
+    <mat-list *ngFor="let category of displayList?.categoryItems" role="list">
+      <mat-form-field class="full-width">
+        <mat-label>Category</mat-label>
+        <input [(ngModel)]="category.category" class="full-width" matInput>
+      </mat-form-field>
+      <mat-list-item *ngFor="let item of category.items"
+                     role="listitem">
+        <mat-form-field class="full-width" floatLabel="never">
+          <input [(ngModel)]="item.details.title" class="full-width" matInput placeholder="Item title">
+        </mat-form-field>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </ng-template>
 </app-sidebar>
+
+
+

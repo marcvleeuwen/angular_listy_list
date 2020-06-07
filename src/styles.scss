@@ -1,4 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+// custom styles
+.full-width {
+  width: 100%;
+}
+
+// text color
+.text {
+  &-danger {
+    color: #e91e63;
+  }
+
+  &-success {
+    color: #69f0ae;
+  }
+}
+
+// backgroun color
+
+.bg {
+  &-danger {
+    background-color: #e91e63;
+    color: white;
+  }
+
+  &-success {
+    background-color: #69f0ae;
+    color: black;
+  }
+}

@@ -21,6 +21,21 @@ export const ListsMock: Array<List> =
         details: {title: 'Item 3', description: 'This is the third item'},
         category: 'something else',
         _createdAt: 'Sat May 16 2020 12:57:30 GMT+0200 (South Africa Standard Time)'
+      }, {
+        _id: '5ebfc71ace85c5392b2a7a28',
+        details: {title: 'Item 3', description: 'This is the third item'},
+        category: 'something else',
+        _createdAt: 'Sat May 16 2020 12:57:30 GMT+0200 (South Africa Standard Time)'
+      }, {
+        _id: '5ebfc71ace85c5392b2a7a27',
+        details: {title: 'Item 3', description: 'This is the third item'},
+        category: 'something else',
+        _createdAt: 'Sat May 16 2020 12:57:30 GMT+0200 (South Africa Standard Time)'
+      }, {
+        _id: '5ebfc71ace85c5392b2a7a26',
+        details: {title: 'Item 3', description: 'This is the third item'},
+        category: 'something else',
+        _createdAt: 'Sat May 16 2020 12:57:30 GMT+0200 (South Africa Standard Time)'
       }],
       users: [{
         _id: '5ebfc71ace85c5392b2a7a25',
